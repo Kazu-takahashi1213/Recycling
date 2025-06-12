@@ -129,3 +129,49 @@ GlobalAveragePooling2D
 Dropout(0.3)
 ↓
 Dense(num_classes, softmax)
+
+```
+
+## About MobileNetV2
+
+<br>
+
+MobileNetV2 is a lightweight and efficient convolutional neural network architecture designed for mobile and embedded devices.
+
+Why use MobileNetV2?
+
+<br>
+
+Pre-trained on ImageNet → strong general features
+
+<br>
+
+Low computational cost → faster training and inference
+
+<br>
+
+Works well with limited datasets
+
+<br>
+
+Ideal for transfer learning
+
+<br>
+
+## Key Architecture Features
+
+<br>
+
+Depthwise Separable Convolutions: drastically reduce parameters
+
+<br>
+
+Inverted Residuals: skip connections that pass through bottlenecks
+
+<br>
+
+Linear Bottlenecks: avoid nonlinearities where unnecessary
+
+<br>
+
+## In our project, we freeze the MobileNetV2 base (weights are not updated) and use it as a feature extractor, adding our own classification head on top.
