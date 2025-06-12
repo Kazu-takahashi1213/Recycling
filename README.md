@@ -144,15 +144,9 @@ Why use MobileNetV2?
 
 Pre-trained on ImageNet → strong general features
 
-<br>
-
 Low computational cost → faster training and inference
 
-<br>
-
 Works well with limited datasets
-
-<br>
 
 Ideal for transfer learning
 
@@ -164,11 +158,7 @@ Ideal for transfer learning
 
 Depthwise Separable Convolutions: drastically reduce parameters
 
-<br>
-
 Inverted Residuals: skip connections that pass through bottlenecks
-
-<br>
 
 Linear Bottlenecks: avoid nonlinearities where unnecessary
 
