@@ -1,196 +1,131 @@
-㊗ テストデータでの正解率90%！！！
+# Recycling AI - Smart Waste Classification for Paderborn
 
 <br>
 
-This is an app that allows Paderborn residents to quickly find out “which trash to throw away and where”. 
+A deep learning–powered app that helps Paderborn residents determine how to sort their household waste—instantly.
 
-Because the garbage segregation in Germany is too complicated...
-
-<br>
-
-〇 Prerequisite
+> Because garbage segregation in Germany can be confusing, especially for newcomers, this app provides a fast and accurate classification based on an image.
 
 <br>
 
-In Paderborn, the garbages are divided into mainly five types below:
+---
 
 <br>
 
-① Restmüll
-
-・Non-recyclable, non-burnable garbage 
-
-・Soiled packaging
+## Overview
 
 <br>
 
-② Bioabfall
-
-・Vegetable scraps 
-
-・Fruit peels
-
-※ Non-biodegradable plastic bags (including compostable bags) are not acceptable.
+This project uses computer vision to classify images of household waste into **five categories** defined by Paderborn’s waste policy.
 
 <br>
 
-③ Altpapier
-
-・Newspapers 
-
-・Magazines 
-
-・cardboard
-
-※ Be careful not to put in dirty or greasy paper.
+Built using:
+- Transfer learning with MobileNetV2
+- A Kaggle garbage dataset (12 categories, 15,000+ images)
+- Streamlit app for interactive use
+- Evaluation with confusion matrix
 
 <br>
 
-④ Wertstofftonne
-
-・Plastic package
-
-・Metal containers and cans
-
-・Composite package
+---
 
 <br>
 
-⑤ Altglas
-
-・Glass 
-
-・Bottles
+## Background: Waste Categories in Paderborn
 
 <br>
 
-〇 download_images.py
+In Paderborn, garbage is sorted into **five main bins**:
 
 <br>
 
-Crawling (BingImageCrawler) is used to acquire 100 photos of each of the five types of trash mentioned above. These are used for model training.
+| Category | Description | Examples |
+|----------|-------------|----------|
+| Restmüll (Residual) | Non-recyclable, contaminated waste | Dirty packaging, textiles |
+| Bioabfall (Biowaste) | Organic waste | Vegetable peels, food scraps |
+| Altpapier (Paper) | Clean paper and cardboard | Newspapers, boxes |
+| Wertstofftonne (Recyclables) | Plastic/metal recyclables | PET bottles, cans |
+| Altglas (Glass) | Glass containers | Bottles, jars |
 
 <br>
 
-✖　points of improvement
-
-・Only 100 pictures is not enough to learn at all. 
-
-・Many photos that are not necessary (Biotonne => Biotonne's trash can photos) are collected.
-
-⇒ Using Kaggle's 「Garbage Classification」 dataset instead of this way
+---
 
 <br>
 
-〇 The content of Garbage Classification dataset
-
-This dataset has 15,150 images from 12 different classes of household garbage; paper, cardboard, biological, metal, plastic, green-glass, brown-glass, white-glass, clothes, shoes, batteries, and trash.
-
-⇒This time, I divided them into the five categories used in Paderborn.
+## Dataset
 
 <br>
 
-① Restmüll
-
-・trash
-
-・shoes
-
-・clothes
+Originally, I tried collecting 100 images per category using `BingImageCrawler`, but this approach lacked quality and quantity.
 
 <br>
 
-② Bioabfall
-
-・biological
+ So instead, I used [Kaggle: Garbage Classification Dataset](https://www.kaggle.com/datasets) with:
 
 <br>
 
-③ Altpapier
-
-・paper
-
-・cardboard
+- 15,150 images
+- 12 original classes:
+  - paper, cardboard, biological, metal, plastic, green-glass, brown-glass, white-glass, clothes, shoes, batteries, trash
 
 <br>
 
-④ Wertstofftonne
-
-・metal
-
-・plastic
+Then I **mapped the 12 categories → 5 categories** to match Paderborn’s policy:
 
 <br>
 
-⑤ Altglas
-
-・glass
-
-・green-glass
-
-・white-glass
-
-These reclassifications are done at the beginning of train_model_kaggle_mapped.py
+| Paderborn Category | Mapped Classes |
+|-------------------|----------------|
+| `biowaste`        | biological     |
+| `glass`           | glass, green-glass, white-glass |
+| `paper`           | paper, cardboard |
+| `wertstoff`       | metal, plastic |
+| `residual`        | trash, shoes, clothes |
 
 <br>
 
-〇 Train the model by train_model.py
-
-・The input image size was standardized to 224 x 224.
-
-・Training in mini batches of 32 images each.
-
-・Train the entire image in 10 epochs.
-
-・Normalize pixel values from 0 to 1 (rescale=1./255)
-
-・20% of the data is used for validation (validation_split=0.2)
-
-・Extensions such as rotation, zoom, and left-right flipping improve the generalization performance of the model.
-
-・MobileNetV2 is used as a pre-trained (ImageNet) model.
-
-・By setting include_top=False, the last classification layer is removed and an original classification layer is added.
-
-・MobileNetV2 parameters are fixed (not trained) by “trainable=False”.
-
-- GlobalAveragePooling2D(): Average the feature map and reduce the dimensionality.
-
-- Dense(128): Extracts intermediate features in all union layers.
-
-- Dense(6): Final output layer (6-class classification, softmax)
+> Batteries were excluded from the model.
 
 <br>
 
-〇 Train the model by train_model_kaggle_mapped.py
-
-Merged from 12 different categories on Kaggle to 5 (biowaste, paper, glass, wertstoff, residual) on Paderborn.
-
-Other contents are the same as train_model.py
-
-⇒ At epoch 6, the percentage of correct answers in the validation data exceeds 90%, and after that, the data is over-trained.
-
-Saved the model trained up to the sixth epoch as classifier_kaggle_paderborn by using save_best_only=True.
+---
 
 <br>
 
-〇 Evaluate model performance with evaluate_model.py
+## Model Training: `train_model_kaggle_mapped.py`
 
 <br>
 
-![ConfuMatrix](https://github.com/user-attachments/assets/b726149e-033d-43da-bebe-69fc15c7d2eb)
+### Key Settings
 
 <br>
 
-・Relatively high classification performance except Restmüll.
+- Input size: **224 × 224**
+- Batch size: **32**
+- Epochs: **10**
+- Validation split: **20%**
+- Image augmentation: rotation, zoom, flipping, shifting
+- Preprocessing: `rescale = 1./255`
 
+<br>
 
-・Perhaps it is because of the overwhelming amount of garbage contained in Restmüll group.
+### Model Architecture
 
-⇒ Need to learn more detailed and large number of photos as Restmüll
+<br>
 
+Using **MobileNetV2** with transfer learning:
 
+<br>
 
-
-
-
+```text
+Input (224x224x3)
+↓
+MobileNetV2 (pre-trained on ImageNet, frozen)
+↓
+GlobalAveragePooling2D
+↓
+Dropout(0.3)
+↓
+Dense(num_classes, softmax)
