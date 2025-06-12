@@ -142,13 +142,13 @@ Why use MobileNetV2?
 
 <br>
 
-Pre-trained on ImageNet → strong general features
+・Pre-trained on ImageNet → strong general features
 
-Low computational cost → faster training and inference
+・Low computational cost → faster training and inference
 
-Works well with limited datasets
+・Works well with limited datasets
 
-Ideal for transfer learning
+・ for transfer learning
 
 <br>
 
@@ -156,12 +156,12 @@ Ideal for transfer learning
 
 <br>
 
-Depthwise Separable Convolutions: drastically reduce parameters
+・Depthwise Separable Convolutions: drastically reduce parameters
 
-Inverted Residuals: skip connections that pass through bottlenecks
+・Inverted Residuals: skip connections that pass through bottlenecks
 
-Linear Bottlenecks: avoid nonlinearities where unnecessary
+・Linear Bottlenecks: avoid nonlinearities where unnecessary
 
 <br>
 
-## In our project, we freeze the MobileNetV2 base (weights are not updated) and use it as a feature extractor, adding our own classification head on top.
+## In our project, I freeze the MobileNetV2 base (weights are not updated) and use it as a feature extractor, adding our own classification head on top.
