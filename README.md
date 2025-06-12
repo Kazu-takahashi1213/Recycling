@@ -10,13 +10,19 @@ Because the garbage segregation in Germany is too complicated...
 
 〇 Prerequisite
 
+<br>
+
 In Paderborn, the garbages are divided into mainly five types below:
+
+<br>
 
 ① Restmüll
 
 ・Non-recyclable, non-burnable garbage 
 
 ・Soiled packaging
+
+<br>
 
 ② Bioabfall
 
@@ -25,6 +31,8 @@ In Paderborn, the garbages are divided into mainly five types below:
 ・Fruit peels
 
 ※ Non-biodegradable plastic bags (including compostable bags) are not acceptable.
+
+<br>
 
 ③ Altpapier
 
@@ -36,6 +44,8 @@ In Paderborn, the garbages are divided into mainly five types below:
 
 ※ Be careful not to put in dirty or greasy paper.
 
+<br>
+
 ④ Wertstofftonne
 
 ・Plastic package
@@ -44,17 +54,23 @@ In Paderborn, the garbages are divided into mainly five types below:
 
 ・Composite package
 
+<br>
+
 ⑤ Altglas
 
 ・Glass 
 
 ・Bottles
 
-
+<br>
 
 〇 download_images.py
 
+<br>
+
 Crawling (BingImageCrawler) is used to acquire 100 photos of each of the five types of trash mentioned above. These are used for model training.
+
+<br>
 
 ✖　points of improvement
 
@@ -64,12 +80,15 @@ Crawling (BingImageCrawler) is used to acquire 100 photos of each of the five ty
 
 ⇒ Using Kaggle's 「Garbage Classification」 dataset instead of this way
 
+<br>
 
 〇 The content of Garbage Classification dataset
 
 This dataset has 15,150 images from 12 different classes of household garbage; paper, cardboard, biological, metal, plastic, green-glass, brown-glass, white-glass, clothes, shoes, batteries, and trash.
 
 ⇒This time, I divided them into the five categories used in Paderborn.
+
+<br>
 
 ① Restmüll
 
@@ -79,11 +98,13 @@ This dataset has 15,150 images from 12 different classes of household garbage; p
 
 ・clothes
 
+<br>
 
 ② Bioabfall
 
 ・biological
 
+<br>
 
 ③ Altpapier
 
@@ -91,11 +112,15 @@ This dataset has 15,150 images from 12 different classes of household garbage; p
 
 ・cardboard
 
+<br>
+
 ④ Wertstofftonne
 
 ・metal
 
 ・plastic
+
+<br>
 
 ⑤ Altglas
 
@@ -107,6 +132,7 @@ This dataset has 15,150 images from 12 different classes of household garbage; p
 
 These reclassifications are done at the beginning of train_model_kaggle_mapped.py
 
+<br>
 
 〇 Train the model by train_model.py
 
@@ -134,6 +160,7 @@ These reclassifications are done at the beginning of train_model_kaggle_mapped.p
 
 - Dense(6): Final output layer (6-class classification, softmax)
 
+<br>
 
 〇 Train the model by train_model_kaggle_mapped.py
 
@@ -144,6 +171,8 @@ Other contents are the same as train_model.py
 ⇒ At epoch 6, the percentage of correct answers in the validation data exceeds 90%, and after that, the data is over-trained.
 
 Saved the model trained up to the sixth epoch as classifier_kaggle_paderborn by using save_best_only=True.
+
+<br>
 
 〇 Evaluate model performance with evaluate_model.py
 
