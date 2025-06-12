@@ -1,6 +1,4 @@
-"""
-"C:\Users\kazu1\Pictures\Screenshots\スクリーンショット 2025-06-12 025144.png"
-"""
+
 
 import os
 import shutil
