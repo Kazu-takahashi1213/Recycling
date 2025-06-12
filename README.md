@@ -1,8 +1,12 @@
 ㊗ テストデータでの正解率90%！！！
 
+<br>
+
 This is an app that allows Paderborn residents to quickly find out “which trash to throw away and where”. 
 
 Because the garbage segregation in Germany is too complicated...
+
+<br>
 
 〇 Prerequisite
 
