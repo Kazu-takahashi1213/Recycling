@@ -176,8 +176,11 @@ Saved the model trained up to the sixth epoch as classifier_kaggle_paderborn by 
 
 〇 Evaluate model performance with evaluate_model.py
 
-![Confusion Matrix](images/ConfuMatrix.png)
+<br>
 
+![ConfuMatrix](https://github.com/user-attachments/assets/b726149e-033d-43da-bebe-69fc15c7d2eb)
+
+<br>
 
 ・Relatively high classification performance except Restmüll.
 
