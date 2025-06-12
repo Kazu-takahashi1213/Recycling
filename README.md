@@ -9,4 +9,4 @@
 ・検証データでは90％の精度を誇る
 
 
-"C:\Users\kazu1\Pictures\Screenshots\スクリーンショット 2025-06-12 025144.png"
+
