@@ -164,7 +164,3 @@ Why use MobileNetV2?
 
 <br>
 
-## In our project, I freeze the MobileNetV2 base (weights are not updated) and use it as a feature extractor, adding our own classification head on top.
-
-<br>
-
